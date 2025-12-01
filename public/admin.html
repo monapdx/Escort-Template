@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Site Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #050506;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 1rem 1.5rem;
+      background: #111;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    fieldset {
+      border: 1px solid #333;
+      border-radius: 0.9rem;
+      padding: 1rem;
+      margin-top: 0.75rem;
+      background: #09070b;
+    }
+    legend {
+      padding: 0 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+    }
+    label {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 0.4rem;
+      border: 1px solid #444;
+      background: #050506;
+      color: #f5f5f5;
+      margin-top: 0.2rem;
+      font-size: 0.9rem;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .col {
+      flex: 1 1 220px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, #f01333, #ff3155);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(255, 0, 64, 0.5);
+    }
+    .btn-secondary {
+      background: #111;
+      color: #ddd;
+      border: 1px solid #444;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #ddd;
+      border: 1px dashed #555;
+    }
+    .btn-small {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+    }
+    .actions {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    .status.success {
+      color: #48e09a;
+    }
+    .status.error {
+      color: #ff6b8b;
+    }
+    .top-bar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+    }
+    .top-bar input {
+      max-width: 220px;
+    }
+    /* Services editor */
+    .service-item {
+      border-radius: 0.7rem;
+      border: 1px solid #333;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      background: #050307;
+      display: grid;
+      gap: 0.5rem;
+    }
+    @media (min-width: 720px) {
+      .service-item {
+        grid-template-columns: 2fr 1fr;
+        align-items: flex-start;
+      }
+      .service-item-main {
+        padding-right: 0.5rem;
+      }
+      .service-item-side {
+        border-left: 1px solid #2a2a2a;
+        padding-left: 0.75rem;
+      }
+    }
+    .service-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .service-item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #555;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    /* Availability editor */
+    .availability-editor-rows {
+      margin-top: 0.5rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .availability-editor-row {
+      display: grid;
+      gap: 0.5rem;
+      padding: 0.6rem 0.7rem;
+      border-radius: 0.7rem;
+      border: 1px solid #333;
+      background: #050307;
+    }
+    @media (min-width: 720px) {
+      .availability-editor-row {
+        grid-template-columns: 1.1fr 1.1fr 0.9fr auto;
+        align-items: center;
+      }
+    }
+    .availability-row-label {
+      font-size: 0.8rem;
+      color: #bbb;
+      margin-bottom: 0.1rem;
+    }
+    /* Photos grid */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .photo-card {
+      border-radius: 0.75rem;
+      border: 1px solid #333;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-card img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 120px;
+    }
+    .photo-card-body {
+      padding: 0.4rem 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .photo-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .photo-pos {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Site Admin</h1>
+    <div class="top-bar">
+      <span>Admin key:</span>
+      <input type="text" id="adminKey" placeholder="Paste your ADMIN_KEY" />
+      <button class="btn-secondary btn-small" id="loadBtn">Load content</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="status" id="globalStatus">
+      Enter your admin key and click "Load content" to begin.
+    </div>
+
+    <!-- ABOUT -->
+    <h2>About</h2>
+    <fieldset>
+      <legend>About content</legend>
+      <label>Tagline
+        <input type="text" id="aboutTagline" />
+      </label>
+      <label>Headline (shown in hero – currently edited on the front template)
+        <input type="text" id="aboutHeadline" placeholder="Optional, for future use" />
+      </label>
+      <label>Intro
+        <textarea id="aboutIntro"></textarea>
+      </label>
+
+      <div class="row">
+        <div class="col">
+          <label>Paragraph 1
+            <textarea id="aboutPara1"></textarea>
+          </label>
+        </div>
+        <div class="col">
+          <label>Paragraph 2
+            <textarea id="aboutPara2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Paragraph 3 (optional)
+            <textarea id="aboutPara3"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Base city
+            <input type="text" id="aboutBaseCity" />
+          </label>
+        </div>
+        <div class="col">
+          <label>Booking style
+            <input type="text" id="aboutBookingStyle" />
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Session length
+            <input type="text" id="aboutSessionLength" />
+          </label>
+        </div>
+        <div class="col">
+          <label>Note
+            <input type="text" id="aboutNote" />
+          </label>
+        </div>
+      </div>
+
+      <label>Tags (comma-separated)
+        <input type="text" id="aboutTags" />
+      </label>
+
+      <div class="actions">
+        <button class="btn-primary" id="saveAboutBtn">Save About</button>
+      </div>
+      <div class="status" id="aboutStatus"></div>
+    </fieldset>
+
+    <!-- SERVICES -->
+    <h2>Services &amp; Rates</h2>
+    <fieldset>
+      <legend>Services</legend>
+      <p class="status">
+        Use the cards below to edit each service. You can add or remove services as needed.
+      </p>
+
+      <div id="servicesContainer"></div>
+
+      <div class="actions">
+        <button class="btn-ghost btn-small" id="addServiceBtn" type="button">+ Add service</button>
+        <button class="btn-primary" id="saveServicesBtn" type="button">Save Services</button>
+      </div>
+      <div class="status" id="servicesStatus"></div>
+    </fieldset>
+
+    <!-- AVAILABILITY -->
+    <h2>Availability</h2>
+    <fieldset>
+      <legend>Weekly availability</legend>
+      <p class="status">
+        Each row represents a day or block (for example, “Mon – Thu evenings”).
+      </p>
+
+      <div class="availability-editor-rows" id="availabilityRowsEditor"></div>
+
+      <div class="actions">
+        <button class="btn-ghost btn-small" id="addAvailabilityRowBtn" type="button">+ Add time block</button>
+      </div>
+
+      <label>Note (shown under the schedule)
+        <textarea id="availabilityNote"></textarea>
+      </label>
+      <label>Instructions (shown in the right column on the site)
+        <textarea id="availabilityInstructions"></textarea>
+      </label>
+
+      <div class="actions">
+        <button class="btn-primary" id="saveAvailabilityBtn" type="button">Save Availability</button>
+      </div>
+      <div class="status" id="availabilityStatus"></div>
+    </fieldset>
+
+    <!-- CONTACT -->
+    <h2>Contact</h2>
+    <fieldset>
+      <legend>Contact details</legend>
+      <label>Email
+        <input type="email" id="contactEmail" />
+      </label>
+      <label>Preferred first contact
+        <textarea id="contactPreferred"></textarea>
+      </label>
+      <label>Response time
+        <input type="text" id="contactResponseTime" />
+      </label>
+
+      <div class="actions">
+        <button class="btn-primary" id="saveContactBtn">Save Contact</button>
+      </div>
+      <div class="status" id="contactStatus"></div>
+    </fieldset>
+
+    <!-- PHOTOS -->
+    <h2>Photos</h2>
+    <fieldset>
+      <legend>Upload &amp; manage photos</legend>
+      <label>Label
+        <input type="text" id="photoLabel" placeholder="e.g., Portrait, Atmosphere..." />
+      </label>
+      <label>Position (for ordering)
+        <input type="text" id="photoPosition" value="0" />
+      </label>
+      <label>Choose file
+        <input type="file" id="photoFile" />
+      </label>
+
+      <div class="actions">
+        <button class="btn-primary" id="uploadPhotoBtn" type="button">Upload photo</button>
+        <button class="btn-secondary" type="button" id="refreshPhotosBtn">Refresh list</button>
+      </div>
+      <div class="status" id="photosStatus"></div>
+
+      <div class="photos-grid" id="photosGrid"></div>
+    </fieldset>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById("globalStatus");
+    let currentContent = null;
+    let servicesState = [];
+    let availabilityState = { weekly: [], note: "", instructions: "" };
+
+    function apiHeaders() {
+      const adminKey = document.getElementById("adminKey").value.trim();
+      return {
+        "Content-Type": "application/json",
+        "x-admin-key": adminKey,
+      };
+    }
+
+    async function loadContent() {
+      try {
+        statusEl.textContent = "Loading content...";
+        const res = await fetch("/api/content");
+        if (!res.ok) throw new Error("Failed to load content");
+        const data = await res.json();
+        currentContent = data;
+
+        // About
+        fillAbout(data.about || {});
+        // Services
+        servicesState = Array.isArray(data.services) ? data.services : [];
+        renderServices();
+        // Availability
+        availabilityState = data.availability || { weekly: [], note: "", instructions: "" };
+        renderAvailabilityRows();
+        document.getElementById("availabilityNote").value = availabilityState.note || "";
+        document.getElementById("availabilityInstructions").value = availabilityState.instructions || "";
+        // Contact
+        fillContact(data.contact || {});
+        // Photos
+        await loadPhotos();
+
+        statusEl.textContent = "Content loaded.";
+        statusEl.className = "status success";
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Error loading content: " + err.message;
+        statusEl.className = "status error";
+      }
+    }
+
+    function fillAbout(about) {
+      document.getElementById("aboutTagline").value = about.tagline || "";
+      document.getElementById("aboutHeadline").value = about.headline || "";
+      document.getElementById("aboutIntro").value = about.intro || "";
+      const paragraphs = about.paragraphs || [];
+      document.getElementById("aboutPara1").value = paragraphs[0] || "";
+      document.getElementById("aboutPara2").value = paragraphs[1] || "";
+      document.getElementById("aboutPara3").value = paragraphs[2] || "";
+      const meta = about.meta || {};
+      document.getElementById("aboutBaseCity").value = meta.baseCity || "";
+      document.getElementById("aboutBookingStyle").value = meta.bookingStyle || "";
+      document.getElementById("aboutSessionLength").value = meta.sessionLength || "";
+      document.getElementById("aboutNote").value = meta.note || "";
+      document.getElementById("aboutTags").value = (about.tags || []).join(", ");
+    }
+
+    function fillContact(contact) {
+      document.getElementById("contactEmail").value = contact.email || "";
+      document.getElementById("contactPreferred").value = contact.preferredFirstContact || "";
+      document.getElementById("contactResponseTime").value = contact.responseTime || "";
+    }
+
+    async function saveSection(section, body, statusId) {
+      const statusNode = document.getElementById(statusId);
+      try {
+        const res = await fetch("/api/content/" + section, {
+          method: "PUT",
+          headers: apiHeaders(),
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || "Request failed");
+        }
+        const data = await res.json();
+        statusNode.textContent = "Saved.";
+        statusNode.className = "status success";
+        if (currentContent) {
+          currentContent[section] = data.section;
+        }
+      } catch (err) {
+        statusNode.textContent = "Error: " + err.message;
+        statusNode.className = "status error";
+      }
+    }
+
+    // ---- Save ABOUT ----
+    document.getElementById("saveAboutBtn").addEventListener("click", () => {
+      const about = {
+        tagline: document.getElementById("aboutTagline").value.trim(),
+        headline: document.getElementById("aboutHeadline").value.trim(),
+        intro: document.getElementById("aboutIntro").value.trim(),
+        paragraphs: [
+          document.getElementById("aboutPara1").value.trim(),
+          document.getElementById("aboutPara2").value.trim(),
+          document.getElementById("aboutPara3").value.trim(),
+        ].filter(Boolean),
+        meta: {
+          baseCity: document.getElementById("aboutBaseCity").value.trim(),
+          bookingStyle: document.getElementById("aboutBookingStyle").value.trim(),
+          sessionLength: document.getElementById("aboutSessionLength").value.trim(),
+          note: document.getElementById("aboutNote").value.trim(),
+        },
+        tags: document
+          .getElementById("aboutTags")
+          .value.split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+      };
+      saveSection("about", about, "aboutStatus");
+    });
+
+    // ========================
+    // SERVICES EDITOR
+    // ========================
+
+    const servicesContainer = document.getElementById("servicesContainer");
+
+    function renderServices() {
+      servicesContainer.innerHTML = "";
+      if (!servicesState.length) {
+        // start with one blank row
+        servicesState.push({
+          id: "",
+          name: "",
+          duration: "",
+          rate: "",
+          description: "",
+        });
+      }
+
+      servicesState.forEach((svc, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "service-item";
+        wrapper.dataset.index = String(index);
+
+        wrapper.innerHTML = `
+          <div class="service-item-main">
+            <div class="service-item-header">
+              <div class="service-item-title">
+                Service ${index + 1}
+              </div>
+              <span class="chip">ID: ${svc.id || "auto / optional"}</span>
+            </div>
+            <label>Name
+              <input type="text" class="svc-name" value="${svc.name || ""}">
+            </label>
+            <label>Description
+              <textarea class="svc-desc">${svc.description || ""}</textarea>
+            </label>
+          </div>
+          <div class="service-item-side">
+            <label>Duration
+              <input type="text" class="svc-duration" value="${svc.duration || ""}">
+            </label>
+            <label>Rate
+              <input type="text" class="svc-rate" value="${svc.rate || ""}">
+            </label>
+            <div class="actions" style="margin-top:0.5rem;">
+              <button type="button" class="btn-secondary btn-small svc-duplicate">Duplicate</button>
+              <button type="button" class="btn-secondary btn-small svc-delete">Delete</button>
+            </div>
+          </div>
+        `;
+
+        servicesContainer.appendChild(wrapper);
+      });
+    }
+
+    document.getElementById("addServiceBtn").addEventListener("click", () => {
+      servicesState.push({
+        id: "",
+        name: "",
+        duration: "",
+        rate: "",
+        description: "",
+      });
+      renderServices();
+    });
+
+    servicesContainer.addEventListener("click", (e) => {
+      const target = e.target;
+      const item = target.closest(".service-item");
+      if (!item) return;
+      const index = parseInt(item.dataset.index, 10);
+
+      if (target.classList.contains("svc-delete")) {
+        if (servicesState.length === 1) {
+          // just clear instead of deleting last one
+          servicesState[0] = { id: "", name: "", duration: "", rate: "", description: "" };
+        } else {
+          servicesState.splice(index, 1);
+        }
+        renderServices();
+      }
+
+      if (target.classList.contains("svc-duplicate")) {
+        const original = servicesState[index];
+        servicesState.splice(index + 1, 0, { ...original, id: original.id || "" });
+        renderServices();
+      }
+    });
+
+    function collectServicesFromUI() {
+      const items = servicesContainer.querySelectorAll(".service-item");
+      const results = [];
+      items.forEach((item, index) => {
+        const name = item.querySelector(".svc-name").value.trim();
+        const description = item.querySelector(".svc-desc").value.trim();
+        const duration = item.querySelector(".svc-duration").value.trim();
+        const rate = item.querySelector(".svc-rate").value.trim();
+        if (!name && !description && !duration && !rate) return;
+
+        const existing = servicesState[index] || {};
+        results.push({
+          id: existing.id || name.toLowerCase().replace(/\s+/g, "-"),
+          name,
+          duration,
+          rate,
+          description,
+        });
+      });
+      return results;
+    }
+
+    document.getElementById("saveServicesBtn").addEventListener("click", () => {
+      const cleaned = collectServicesFromUI();
+      if (!cleaned.length) {
+        const el = document.getElementById("servicesStatus");
+        el.textContent = "Please add at least one service before saving.";
+        el.className = "status error";
+        return;
+      }
+      servicesState = cleaned;
+      saveSection("services", cleaned, "servicesStatus");
+    });
+
+    // ========================
+    // AVAILABILITY EDITOR
+    // ========================
+
+    const availabilityRowsEditor = document.getElementById("availabilityRowsEditor");
+
+    function renderAvailabilityRows() {
+      const weekly = Array.isArray(availabilityState.weekly) ? availabilityState.weekly : [];
+      if (!weekly.length) {
+        availabilityState.weekly = [
+          { label: "Mon – Thu", time: "Evenings", status: "limited" },
+          { label: "Fri – Sat", time: "Afternoon & evening", status: "open" },
+          { label: "Sunday", time: "By request", status: "unavailable" },
+        ];
+      }
+      availabilityRowsEditor.innerHTML = "";
+      availabilityState.weekly.forEach((slot, idx) => {
+        const row = document.createElement("div");
+        row.className = "availability-editor-row";
+        row.dataset.index = String(idx);
+        row.innerHTML = `
+          <div>
+            <div class="availability-row-label">Label</div>
+            <input type="text" class="avail-label" value="${slot.label || ""}" placeholder="e.g., Mon – Thu" />
+          </div>
+          <div>
+            <div class="availability-row-label">Time</div>
+            <input type="text" class="avail-time" value="${slot.time || ""}" placeholder="e.g., Evenings only" />
+          </div>
+          <div>
+            <div class="availability-row-label">Status</div>
+            <select class="avail-status">
+              <option value="open"${slot.status === "open" ? " selected" : ""}>Open</option>
+              <option value="limited"${slot.status === "limited" ? " selected" : ""}>Limited</option>
+              <option value="unavailable"${slot.status === "unavailable" ? " selected" : ""}>Unavailable</option>
+            </select>
+          </div>
+          <div>
+            <button type="button" class="btn-secondary btn-small avail-delete">Delete</button>
+          </div>
+        `;
+        availabilityRowsEditor.appendChild(row);
+      });
+    }
+
+    document.getElementById("addAvailabilityRowBtn").addEventListener("click", () => {
+      if (!Array.isArray(availabilityState.weekly)) availabilityState.weekly = [];
+      availabilityState.weekly.push({ label: "", time: "", status: "limited" });
+      renderAvailabilityRows();
+    });
+
+    availabilityRowsEditor.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!target.classList.contains("avail-delete")) return;
+      const row = target.closest(".availability-editor-row");
+      if (!row) return;
+      const index = parseInt(row.dataset.index, 10);
+      if (availabilityState.weekly.length === 1) {
+        availabilityState.weekly[0] = { label: "", time: "", status: "limited" };
+      } else {
+        availabilityState.weekly.splice(index, 1);
+      }
+      renderAvailabilityRows();
+    });
+
+    function collectAvailabilityFromUI() {
+      const rows = availabilityRowsEditor.querySelectorAll(".availability-editor-row");
+      const weekly = [];
+      rows.forEach((row) => {
+        const labelEl = row.querySelector(".avail-label");
+        const timeEl = row.querySelector(".avail-time");
+        const statusEl = row.querySelector(".avail-status");
+        const label = labelEl.value.trim();
+        const time = timeEl.value.trim();
+        const status = statusEl.value || "limited";
+        if (!label && !time) return;
+        weekly.push({ label, time, status });
+      });
+      return weekly;
+    }
+
+    document.getElementById("saveAvailabilityBtn").addEventListener("click", () => {
+      const weekly = collectAvailabilityFromUI();
+      const body = {
+        weekly,
+        note: document.getElementById("availabilityNote").value.trim(),
+        instructions: document.getElementById("availabilityInstructions").value.trim(),
+      };
+      availabilityState = body;
+      saveSection("availability", body, "availabilityStatus");
+    });
+
+    // ========================
+    // CONTACT
+    // ========================
+
+    document.getElementById("saveContactBtn").addEventListener("click", () => {
+      const body = {
+        email: document.getElementById("contactEmail").value.trim(),
+        preferredFirstContact: document.getElementById("contactPreferred").value.trim(),
+        responseTime: document.getElementById("contactResponseTime").value.trim(),
+      };
+      saveSection("contact", body, "contactStatus");
+    });
+
+    // ========================
+    // PHOTOS
+    // ========================
+
+    async function loadPhotos() {
+      try {
+        const res = await fetch("/api/photos");
+        if (!res.ok) throw new Error("Failed to load photos");
+        const photos = await res.json();
+        const grid = document.getElementById("photosGrid");
+        grid.innerHTML = "";
+        photos.forEach((p) => {
+          const card = document.createElement("div");
+          card.className = "photo-card";
+          card.innerHTML = `
+            <img src="${p.url}" alt="${p.label || ""}">
+            <div class="photo-card-body">
+              <div class="photo-label" title="${p.label || ""}">${p.label || ""}</div>
+              <div class="photo-pos">#${p.position ?? 0}</div>
+              <button class="btn-secondary btn-small photo-delete" data-id="${p.id}">Delete</button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        const el = document.getElementById("photosStatus");
+        el.textContent = "Error loading photos: " + err.message;
+        el.className = "status error";
+      }
+    }
+
+    const photosGrid = document.getElementById("photosGrid");
+    photosGrid.addEventListener("click", async (e) => {
+      const btn = e.target.closest(".photo-delete");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      if (!confirm("Delete this photo?")) return;
+      try {
+        const res = await fetch("/api/photos/" + encodeURIComponent(id), {
+          method: "DELETE",
+          headers: { "x-admin-key": document.getElementById("adminKey").value.trim() },
+        });
+        if (!res.ok) throw new Error("Failed to delete");
+        await loadPhotos();
+        document.getElementById("photosStatus").textContent = "Photo deleted.";
+        document.getElementById("photosStatus").className = "status success";
+      } catch (err) {
+        document.getElementById("photosStatus").textContent = "Error deleting: " + err.message;
+        document.getElementById("photosStatus").className = "status error";
+      }
+    });
+
+    document.getElementById("uploadPhotoBtn").addEventListener("click", async () => {
+      const adminKey = document.getElementById("adminKey").value.trim();
+      const label = document.getElementById("photoLabel").value.trim();
+      const pos = document.getElementById("photoPosition").value.trim();
+      const fileInput = document.getElementById("photoFile");
+      const statusNode = document.getElementById("photosStatus");
+
+      if (!fileInput.files[0]) {
+        statusNode.textContent = "Please choose a file first.";
+        statusNode.className = "status error";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("photo", fileInput.files[0]);
+      formData.append("label", label);
+      formData.append("position", pos || "0");
+
+      try {
+        statusNode.textContent = "Uploading...";
+        statusNode.className = "status";
+        const res = await fetch("/api/photos", {
+          method: "POST",
+          headers: { "x-admin-key": adminKey },
+          body: formData,
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || "Upload failed");
+        }
+        await res.json();
+        statusNode.textContent = "Uploaded.";
+        statusNode.className = "status success";
+        fileInput.value = "";
+        document.getElementById("photoLabel").value = "";
+        await loadPhotos();
+      } catch (err) {
+        statusNode.textContent = "Error: " + err.message;
+        statusNode.className = "status error";
+      }
+    });
+
+    document.getElementById("refreshPhotosBtn").addEventListener("click", loadPhotos);
+    document.getElementById("loadBtn").addEventListener("click", loadContent);
+  </script>
+</body>
+</html>
