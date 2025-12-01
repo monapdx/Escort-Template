@@ -1,0 +1,92 @@
+{
+  "about": {
+    "tagline": "Professional tagline",
+    "headline": "Bold, unapologetic and unforgettable.",
+    "intro": "Use this area for a concise intro blurb. Explain who you are, what you offer, and why clients should want to work with you.",
+    "paragraphs": [
+      "Use this section to tell your story in a little more depth.",
+      "Mention your personality, boundaries, strengths, and how you want clients to feel."
+    ],
+    "meta": {
+      "baseCity": "Your City, ST",
+      "bookingStyle": "Pre-booked only",
+      "sessionLength": "1–4 hours (longer by request)",
+      "note": "Screening required for new clients"
+    },
+    "tags": [
+      "Blunt but kind",
+      "Low drama",
+      "Straightforward",
+      "Respect is non-negotiable"
+    ]
+  },
+  "services": [
+    {
+      "id": "standard",
+      "name": "Standard session",
+      "duration": "60 minutes",
+      "rate": "$XXX",
+      "description": "Brief description of what’s included in a standard session: your energy, boundaries, and expectations."
+    },
+    {
+      "id": "extended",
+      "name": "Extended session",
+      "duration": "90–120 minutes",
+      "rate": "$XXX–$XXX",
+      "description": "Longer time together, slower pace, and space to actually relax."
+    },
+    {
+      "id": "evening",
+      "name": "Evening / long-form booking",
+      "duration": "3+ hours",
+      "rate": "Custom",
+      "description": "Dinner, events, or longer experiences. Outline your minimum, typical structure, and any special considerations."
+    }
+  ],
+  "availability": {
+    "weekly": [
+      {
+        "label": "Mon – Thu",
+        "time": "Evenings only",
+        "status": "limited"
+      },
+      {
+        "label": "Fri – Sat",
+        "time": "Afternoon & evening",
+        "status": "open"
+      },
+      {
+        "label": "Sunday",
+        "time": "By special request",
+        "status": "unavailable"
+      }
+    ],
+    "note": "This is just a visual guide. Confirmed times are always shared privately after screening.",
+    "instructions": "Example: For safety and boundaries, I do not meet same-day requests from new clients."
+  },
+  "photos": [
+    {
+      "id": "attachment_1763153127300.jpg",
+      "url": "/uploads/attachment_1763153127300.jpg",
+      "label": "Photo",
+      "position": 0
+    },
+    {
+      "id": "blue-3_1763153257461.png",
+      "url": "/uploads/blue-3_1763153257461.png",
+      "label": "Photo",
+      "position": 0
+    },
+    {
+      "id": "attachment-18_1763153265957.jpg",
+      "url": "/uploads/attachment-18_1763153265957.jpg",
+      "label": "Photo",
+      "position": 0
+    }
+  ],
+  "contact": {
+    "email": "youremail@example.com",
+    "preferredFirstContact": "Email with basic screening info. No explicit or graphic messages.",
+    "responseTime": "Within 24–48 hours for respectful, complete inquiries."
+  }
+}
