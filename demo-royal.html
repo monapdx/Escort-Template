@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bold Scarlet Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    /* =========================
+       THEME VARIABLES
+       Edit these to change the look
+       ========================== */
+
+    :root {
+      --font-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --font-accent: "Oswald", system-ui, sans-serif;
+
+      /* Base scale */
+      --radius-lg: 1.25rem;
+      --radius-md: 0.75rem;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.75);
+      --transition-fast: 180ms ease-out;
+      --transition-med: 260ms ease-out;
+
+      /* Default palette – will be overridden by body.theme-* classes */
+      --color-bg: #050506;
+      --color-bg-elevated: #141218;
+      --color-bg-soft: #1c181f;
+      --color-accent: #f01333; /* scarlet */
+      --color-accent-soft: #ff3155;
+      --color-accent-muted: rgba(240, 19, 51, 0.15);
+      --color-text: #f7f7f7;
+      --color-text-muted: #aaa;
+      --color-border-subtle: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ===== Optional alternate color schemes =====
+       To switch schemes, just change the class on <body>
+       e.g. <body class="theme-crimson"> or <body class="theme-royal">
+    */
+
+    body.theme-scarlet {
+      --color-bg: #050506;
+      --color-bg-elevated: #151218;
+      --color-bg-soft: #211823;
+      --color-accent: #f01333;
+      --color-accent-soft: #ff3155;
+      --color-accent-muted: rgba(240, 19, 51, 0.16);
+    }
+
+    body.theme-crimson {
+      --color-bg: #050309;
+      --color-bg-elevated: #190713;
+      --color-bg-soft: #230919;
+      --color-accent: #d9143c;
+      --color-accent-soft: #ff4b7d;
+      --color-accent-muted: rgba(217, 20, 60, 0.16);
+    }
+
+    body.theme-royal {
+      --color-bg: #020308;
+      --color-bg-elevated: #050c1a;
+      --color-bg-soft: #071326;
+      --color-accent: #ff0040;
+      --color-accent-soft: #ff4f7b;
+      --color-accent-muted: rgba(255, 0, 64, 0.18);
+    }
+
+    /* =========================
+       GLOBAL
+       ========================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-base);
+      background: radial-gradient(circle at top left, #20101a 0, #050506 45%, #000 100%);
+      color: var(--color-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+    }
+
+    @media (min-width: 880px) {
+      .page {
+        padding: 2.5rem 1.25rem 4.5rem;
+      }
+    }
+
+    /* =========================
+       SKIP LINK
+       ========================== */
+
+    .skip-link {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -3rem;
+      background: #000;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      z-index: 10000;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: top var(--transition-fast);
+    }
+
+    .skip-link:focus {
+      top: 0.75rem;
+    }
+
+    /* =========================
+       HEADER / NAV
+       ========================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.88),
+        rgba(0, 0, 0, 0.6),
+        transparent
+      );
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.25rem 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff 0, #ff4f7b 28%, #f01333 55%, #050506 100%);
+      box-shadow: 0 0 18px rgba(255, 0, 64, 0.8);
+    }
+
+    .brand-text {
+      font-family: var(--font-accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.22em;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 0.25rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-text-muted);
+      border: 1px solid transparent;
+      transition: border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      border-color: var(--color-accent-muted);
+      background: rgba(255, 255, 255, 0.02);
+      transform: translateY(-1px);
+    }
+
+    .nav-link--primary {
+      color: #fff;
+      border-color: var(--color-accent);
+      background: linear-gradient(
+        120deg,
+        var(--color-accent),
+        var(--color-accent-soft)
+      );
+      box-shadow: 0 0 18px rgba(255, 0, 64, 0.45);
+    }
+
+    .nav-link--primary:hover {
+      box-shadow: 0 0 26px rgba(255, 0, 64, 0.6);
+    }
+
+    .nav-toggle {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.4rem 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-toggle-icon {
+      font-size: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .nav-toggle {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-menu-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 0.35rem 1.25rem 0.9rem;
+      background: radial-gradient(circle at top center, #1a0910 0, #050506 65%);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .nav-menu-mobile.open {
+      display: flex;
+    }
+
+    .nav-menu-mobile .nav-link {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* =========================
+       HERO / ABOUT
+       ========================== */
+
+    main {
+      flex: 1;
+    }
+
+    .hero {
+      display: grid;
+      gap: 2rem;
+      margin-top: 1.8rem;
+    }
+
+    @media (min-width: 860px) {
+      .hero {
+        grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 3rem;
+      }
+    }
+
+    .hero-copy {
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 0.8rem;
+      color: var(--color-accent-soft);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: clamp(2rem, 3.2vw + 1.4rem, 3rem);
+      line-height: 1.1;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title span {
+      display: inline-block;
+      background: linear-gradient(
+        115deg,
+        var(--color-accent-soft),
+        #ffffff
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 34rem;
+      color: var(--color-text-muted);
+      font-size: 0.98rem;
+      line-height: 1.65;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-accent-muted);
+      background: radial-gradient(circle at left, rgba(255, 0, 64, 0.18), transparent);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-highlight-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff 0, var(--color-accent-soft) 50%, var(--color-accent) 100%);
+      box-shadow: 0 0 12px rgba(255, 0, 64, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.35rem;
+      border: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(
+        125deg,
+        var(--color-accent),
+        var(--color-accent-soft)
+      );
+      box-shadow: 0 0 22px rgba(255, 0, 64, 0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 30px rgba(255, 0, 64, 0.8);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border-subtle);
+    }
+
+    .btn-ghost:hover {
+      color: #fff;
+      border-color: var(--color-accent-soft);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      max-width: 26rem;
+    }
+
+    .hero-card {
+      position: relative;
+      height: 100%;
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.2rem 1.4rem;
+      background:
+        radial-gradient(circle at top, rgba(255, 0, 64, 0.35), transparent 52%),
+        radial-gradient(circle at bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1));
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      isolation: isolate;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.12), transparent 60%),
+        radial-gradient(circle at 90% 100%, rgba(255, 0, 64, 0.25), transparent 65%);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      background: rgba(0, 0, 0, 0.65);
+    }
+
+    .hero-card-time {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      text-align: right;
+    }
+
+    .hero-card-main {
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-card-main h2 {
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 1.05rem;
+      margin: 0 0 0.4rem;
+    }
+
+    .hero-card-main p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .hero-card-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-pill {
+      font-size: 0.7rem;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-text-muted);
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-availability-pill {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(18, 216, 112, 0.15);
+      border: 1px solid rgba(18, 216, 112, 0.65);
+      color: #d0ffe6;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hero-availability-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #29ff92;
+      box-shadow: 0 0 12px rgba(41, 255, 146, 0.9);
+    }
+
+    .hero-card-link {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.85;
+    }
+
+    .hero-card-link::after {
+      content: "↗";
+      font-size: 0.9rem;
+    }
+
+    .hero-card-link:hover {
+      opacity: 1;
+    }
+
+    /* =========================
+       SECTION WRAPPER
+       ========================== */
+
+    section {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    @media (min-width: 860px) {
+      section {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      font-size: 0.78rem;
+      color: var(--color-accent-soft);
+    }
+
+    .section-title {
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 1.1rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    /* =========================
+       ABOUT SECTION
+       ========================== */
+
+    .about-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 780px) {
+      .about-grid {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        gap: 1.75rem;
+      }
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+    }
+
+    .about-text p {
+      margin-bottom: 0.9rem;
+    }
+
+    .about-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .about-meta-item {
+      padding: 0.7rem 0.8rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, var(--color-accent-muted), #141218);
+      border: 1px solid var(--color-border-subtle);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .about-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+    }
+
+    .about-meta-value {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .about-side-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent),
+        linear-gradient(to bottom, #120913, #050506);
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .about-side-card h3 {
+      margin: 0;
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .about-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .about-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* =========================
+       SERVICES & RATES
+       ========================== */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 780px) {
+      .services-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .service-list {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .service-card {
+      position: relative;
+      padding: 0.9rem 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      background: linear-gradient(
+          125deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.0)
+        ),
+        #09070b;
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.9);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) auto;
+      gap: 0.6rem 1rem;
+      align-items: center;
+    }
+
+    .service-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .service-desc {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      grid-column: 1 / -1;
+    }
+
+    .service-rate {
+      font-size: 0.9rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid var(--color-accent-soft);
+      color: var(--color-accent-soft);
+      justify-self: flex-end;
+      white-space: nowrap;
+    }
+
+    .service-duration {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .rates-note {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      margin-top: 0.4rem;
+    }
+
+    .service-aside {
+      padding: 0.95rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at 0% 0%, rgba(255, 0, 64, 0.2), transparent 55%),
+        #07050b;
+      border: 1px solid var(--color-border-subtle);
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .service-aside h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.8rem;
+      color: #fff;
+    }
+
+    .service-bullets {
+      padding-left: 1.2rem;
+      margin: 0.3rem 0 0.4rem;
+    }
+
+    .service-bullets li {
+      margin-bottom: 0.2rem;
+    }
+
+    /* =========================
+       AVAILABILITY
+       ========================== */
+
+    .availability-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 820px) {
+      .availability-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .availability-card {
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      background: radial-gradient(circle at top left, var(--color-accent-muted), #09070b);
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.85);
+    }
+
+    .availability-card h3 {
+      margin: 0 0 0.6rem;
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.85rem;
+    }
+
+    .availability-rows {
+      display: grid;
+      gap: 0.3rem;
+      font-size: 0.82rem;
+    }
+
+    .availability-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.4rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .availability-day {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.76rem;
+      color: var(--color-text-muted);
+    }
+
+    .availability-time {
+      font-size: 0.85rem;
+    }
+
+    .availability-status {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .status-open {
+      background: rgba(18, 216, 112, 0.13);
+      border: 1px solid rgba(18, 216, 112, 0.75);
+      color: #c5ffe1;
+    }
+
+    .status-limited {
+      background: rgba(255, 204, 0, 0.15);
+      border: 1px solid rgba(255, 204, 0, 0.75);
+      color: #fff4c2;
+    }
+
+    .status-unavailable {
+      background: rgba(255, 0, 64, 0.08);
+      border: 1px solid rgba(255, 0, 64, 0.75);
+      color: #ffc3d5;
+    }
+
+    .availability-note {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+    }
+
+    .availability-cta {
+      padding: 0.95rem;
+      border-radius: var(--radius-md);
+      background: linear-gradient(
+        125deg,
+        rgba(255, 0, 64, 0.35),
+        rgba(0, 0, 0, 0.8)
+      );
+      border: 1px solid rgba(255, 0, 64, 0.45);
+      font-size: 0.85rem;
+      color: #ffe8ef;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .availability-cta h3 {
+      margin: 0;
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+    }
+
+    /* =========================
+       PHOTOS
+       ========================== */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    @media (min-width: 720px) {
+      .photo-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: radial-gradient(circle at center, #555, #000);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.9);
+      transform-origin: center;
+      transition: transform var(--transition-med), box-shadow var(--transition-med),
+        border-color var(--transition-med);
+    }
+
+    .photo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      filter: grayscale(0.1) contrast(1.05) saturate(1.2);
+      transition: transform var(--transition-med), filter var(--transition-med);
+    }
+
+    /* Placeholder photos – replace with your own images */
+    .photo-card--1::before {
+      background-image: linear-gradient(135deg, #111, #333);
+    }
+    .photo-card--2::before {
+      background-image: linear-gradient(135deg, #111, #f01333);
+    }
+    .photo-card--3::before {
+      background-image: linear-gradient(135deg, #333, #000);
+    }
+    .photo-card--4::before {
+      background-image: linear-gradient(135deg, #050506, #ff3155);
+    }
+    .photo-card--5::before {
+      background-image: linear-gradient(135deg, #111, #666);
+    }
+    .photo-card--6::before {
+      background-image: linear-gradient(135deg, #000, #444);
+    }
+
+    .photo-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.95);
+      border-color: var(--color-accent-soft);
+    }
+
+    .photo-card:hover::before {
+      transform: scale(1.08);
+      filter: grayscale(0) contrast(1.1) saturate(1.45);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9),
+        rgba(0, 0, 0, 0.0)
+      );
+      padding: 0.7rem 0.7rem 0.8rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #f8f8f8;
+    }
+
+    .photo-overlay span:first-child {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+    }
+
+    /* =========================
+       CONTACT
+       ========================== */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 820px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .contact-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at 0 0, var(--color-accent-muted), #07050b);
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.9);
+    }
+
+    .contact-row {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .field-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-text-muted);
+    }
+
+    .field-input,
+    .field-textarea,
+    .field-select {
+      font-family: var(--font-base);
+      font-size: 0.9rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      outline: none;
+      transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+    }
+
+    .field-textarea {
+      border-radius: 0.9rem;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .field-input:focus,
+    .field-textarea:focus,
+    .field-select:focus {
+      border-color: var(--color-accent-soft);
+      box-shadow: 0 0 0 1px rgba(255, 0, 64, 0.55);
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .contact-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.6rem;
+    }
+
+    .contact-note {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+    }
+
+    .contact-aside {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: linear-gradient(
+        160deg,
+        rgba(255, 0, 64, 0.28),
+        rgba(0, 0, 0, 0.95)
+      );
+      border: 1px solid rgba(255, 0, 64, 0.5);
+      font-size: 0.82rem;
+      color: #ffe8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .contact-aside h3 {
+      margin: 0;
+      font-family: var(--font-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+    }
+
+    .contact-aside-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .contact-aside-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.8;
+    }
+
+    .contact-aside-value {
+      font-size: 0.88rem;
+      word-break: break-word;
+    }
+
+    /* =========================
+       FOOTER
+       ========================== */
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 1.1rem 1.25rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: radial-gradient(circle at top, #160811, #040305);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .footer-link {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .footer-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.12rem;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent-soft);
+      transition: width var(--transition-fast);
+    }
+
+    .footer-link:hover::after {
+      width: 100%;
+    }
+
+    /* =========================
+       SIMPLE UTILITIES
+       ========================== */
+
+    .pill-accent-outline {
+      border-radius: 999px;
+      padding: 0.22rem 0.55rem;
+      border: 1px solid var(--color-accent-muted);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body class="theme-royal">
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span>Your Name</span>
+          <span>Portfolio • Services</span>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#services" class="nav-link">Services &amp; Rates</a>
+          <a href="#availability" class="nav-link">Availability</a>
+          <a href="#photos" class="nav-link">Photos</a>
+          <a href="#contact" class="nav-link nav-link--primary">Contact</a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu-mobile">
+          <span class="nav-toggle-icon">☰</span>
+          <span>Menu</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="nav-menu-mobile" class="nav-menu-mobile" aria-hidden="true">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services &amp; Rates</a>
+      <a href="#availability" class="nav-link">Availability</a>
+      <a href="#photos" class="nav-link">Photos</a>
+      <a href="#contact" class="nav-link nav-link--primary">Contact</a>
+    </div>
+  </header>
+
+  <!-- PAGE WRAPPER -->
+  <div class="page">
+    <main id="main">
+      <!-- HERO / ABOUT (Top) -->
+      <section id="about" aria-label="About">
+        <div class="hero">
+          <div class="hero-copy">
+  <div class="hero-eyebrow" id="aboutTaglineDisplay">Professional tagline</div>
+  <h1 class="hero-title" id="aboutHeadlineDisplay">
+    Bold, unapologetic and unforgettable.
+  </h1>
+  <p class="hero-subtitle" id="aboutIntroDisplay">
+    Use this area for a concise intro blurb. Explain who you are,
+    what you offer, and why clients should want to work with you —
+    in your own voice.
+  </p>
+
+  <div class="hero-highlight">
+    <div class="hero-highlight-dot"></div>
+    <span>Currently accepting select new clients</span>
+  </div>
+
+  <!-- rest of hero-copy stays the same -->
+
+
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
+                Request booking
+              </button>
+              <a href="#services" class="btn btn-ghost">
+                View services
+              </a>
+            </div>
+
+            <div class="hero-note">
+              Edit all text, labels and even the color palette by changing a few CSS variables at the top of this file.
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Quick snapshot">
+            <div class="hero-card-header">
+              <div class="hero-badge">Snapshot</div>
+              <div class="hero-card-time">
+                Updated for <strong>2025</strong><br />
+                <span>Template layout</span>
+              </div>
+            </div>
+            <div class="hero-card-main">
+              <h2>Your vibe in one line</h2>
+              <p>
+                Replace this with a short sentence that captures your style or brand.
+                Think of it as the headline you want people to remember.
+              </p>
+            </div>
+            <div class="hero-card-pill-row">
+              <span class="hero-pill">Discreet</span>
+              <span class="hero-pill">By appointment</span>
+              <span class="hero-pill">Custom experiences</span>
+            </div>
+            <div class="hero-card-footer">
+              <div class="hero-availability-pill">
+                <span class="hero-availability-dot"></span>
+                <span>Next openings: This Week</span>
+              </div>
+              <button class="hero-card-link" type="button" onclick="document.getElementById('availability').scrollIntoView({ behavior: 'smooth' })">
+                Check availability
+              </button>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Deeper About content -->
+        <div class="section-header" style="margin-top: 2.2rem;">
+          <div class="section-title-group">
+            <div class="section-label">About</div>
+            <h2 class="section-title">A closer look</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div>
+            <div class="about-text">
+              <p>
+                Use this section to tell your story in a little more depth —
+                what you value, how you work, and what it feels like to spend time with you.
+              </p>
+              <p>
+                You might mention your personality, your boundaries, your strengths, and how you want clients to feel after their time with you.
+              </p>
+              <p>
+                Keep the tone as honest and direct as you like; this layout is designed to support anything from minimal copy to longer paragraphs.
+              </p>
+            </div>
+
+            <div class="about-meta">
+              <div class="about-meta-item">
+                <span class="about-meta-label">Base city</span>
+                <span class="about-meta-value">Your City, ST</span>
+              </div>
+              <div class="about-meta-item">
+                <span class="about-meta-label">Booking style</span>
+                <span class="about-meta-value">Pre-booked only</span>
+              </div>
+              <div class="about-meta-item">
+                <span class="about-meta-label">Session length</span>
+                <span class="about-meta-value">1–4 hours (longer by request)</span>
+              </div>
+              <div class="about-meta-item">
+                <span class="about-meta-label">Note</span>
+                <span class="about-meta-value">Screening required for new clients</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="about-side-card">
+            <h3>Your tone</h3>
+            <div>
+              This card works as a quick personality snapshot. Swap in words
+              and phrases that feel true to you.
+            </div>
+            <div class="about-tag-row">
+              <span class="about-tag">Blunt but kind</span>
+              <span class="about-tag">Low drama</span>
+              <span class="about-tag">Straightforward</span>
+              <span class="about-tag">Respect is non-negotiable</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- SERVICES & RATES -->
+      <section id="services" aria-label="Services and rates">
+        <div class="section-header">
+          <div class="section-title-group">
+            <div class="section-label">Services &amp; Rates</div>
+            <h2 class="section-title">What you offer</h2>
+          </div>
+          <div class="pill-accent-outline">
+            Example layout – plug in your own details
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <div>
+            <div class="service-list">
+              <article class="service-card">
+                <div>
+                  <div class="service-name">Standard session</div>
+                  <div class="service-duration">60 minutes</div>
+                </div>
+                <div class="service-rate">$XXX</div>
+                <div class="service-desc">
+                  Brief description of what’s included in a standard session:
+                  your energy, boundaries, and expectations.
+                </div>
+              </article>
+
+              <article class="service-card">
+                <div>
+                  <div class="service-name">Extended session</div>
+                  <div class="service-duration">90–120 minutes</div>
+                </div>
+                <div class="service-rate">$XXX–$XXX</div>
+                <div class="service-desc">
+                  Longer time together, slower pace, and space to actually relax.
+                  Great for first-timers or those who like time to decompress.
+                </div>
+              </article>
+
+              <article class="service-card">
+                <div>
+                  <div class="service-name">Evening / long-form booking</div>
+                  <div class="service-duration">3+ hours</div>
+                </div>
+                <div class="service-rate">Custom</div>
+                <div class="service-desc">
+                  Dinner, events, or longer experiences. Outline your minimum,
+                  typical structure, and any special considerations.
+                </div>
+              </article>
+            </div>
+
+            <div class="rates-note">
+              All rates are for time and companionship only. Final details,
+              screening, and confirmation are handled privately.
+            </div>
+          </div>
+
+          <aside class="service-aside">
+            <h3>How to read this section</h3>
+            <p>
+              This side column is a good place to spell out your policies in plain language:
+            </p>
+            <ul class="service-bullets">
+              <li>Preferred notice for new bookings</li>
+              <li>Deposit or cancellation expectations</li>
+              <li>Travel or outcall policies</li>
+            </ul>
+            <p>
+              All copy is just placeholder text – replace it with your actual details or delete anything you don’t need.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- AVAILABILITY -->
+      <section id="availability" aria-label="Availability">
+        <div class="section-header">
+          <div class="section-title-group">
+            <div class="section-label">Availability</div>
+            <h2 class="section-title">When you can book</h2>
+          </div>
+          <div class="section-subtitle">
+            Adjust this to match your real schedule or how you usually book.
+          </div>
+        </div>
+
+        <div class="availability-layout">
+          <div class="availability-card">
+            <h3>Typical weekly rhythm</h3>
+            <div class="availability-rows">
+              <div class="availability-row">
+                <div>
+                  <div class="availability-day">Mon – Thu</div>
+                  <div class="availability-time">Evenings only</div>
+                </div>
+                <span class="availability-status status-limited">Limited</span>
+              </div>
+              <div class="availability-row">
+                <div>
+                  <div class="availability-day">Fri – Sat</div>
+                  <div class="availability-time">Afternoon &amp; evening</div>
+                </div>
+                <span class="availability-status status-open">Preferred</span>
+              </div>
+              <div class="availability-row">
+                <div>
+                  <div class="availability-day">Sunday</div>
+                  <div class="availability-time">By special request</div>
+                </div>
+                <span class="availability-status status-unavailable">Case by case</span>
+              </div>
+            </div>
+            <p class="availability-note">
+              This is just a visual guide. Real availability may shift week to week; confirmed times are always shared privately after screening.
+            </p>
+          </div>
+
+          <aside class="availability-cta">
+            <h3>How to request time</h3>
+            <p>
+              You can direct people here to your preferred booking process:
+              form, email, or screening link.
+            </p>
+            <p>
+              Be clear, be firm, and be specific. You can also note that
+              you do not respond to certain types of messages.
+            </p>
+            <p style="font-size: 0.78rem; opacity: 0.9;">
+              Example: “For safety and boundaries, I do not meet same-day requests
+              from new clients.”
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PHOTOS -->
+      <section id="photos" aria-label="Photos">
+        <div class="section-header">
+          <div class="section-title-group">
+            <div class="section-label">Photos</div>
+            <h2 class="section-title">A glimpse of you</h2>
+          </div>
+          <div class="section-subtitle">
+            Replace the placeholders with your own images.
+          </div>
+        </div>
+
+        <div class="photo-grid">
+          <figure class="photo-card photo-card--1">
+            <div class="photo-overlay">
+              <span>Portrait</span>
+              <span>01</span>
+            </div>
+          </figure>
+          <figure class="photo-card photo-card--2">
+            <div class="photo-overlay">
+              <span>Detail</span>
+              <span>02</span>
+            </div>
+          </figure>
+          <figure class="photo-card photo-card--3">
+            <div class="photo-overlay">
+              <span>Full length</span>
+              <span>03</span>
+            </div>
+          </figure>
+          <figure class="photo-card photo-card--4">
+            <div class="photo-overlay">
+              <span>Atmosphere</span>
+              <span>04</span>
+            </div>
+          </figure>
+          <figure class="photo-card photo-card--5">
+            <div class="photo-overlay">
+              <span>In motion</span>
+              <span>05</span>
+            </div>
+          </figure>
+          <figure class="photo-card photo-card--6">
+            <div class="photo-overlay">
+              <span>Close-up</span>
+              <span>06</span>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" aria-label="Contact">
+        <div class="section-header">
+          <div class="section-title-group">
+            <div class="section-label">Contact</div>
+            <h2 class="section-title">Start the conversation</h2>
+          </div>
+          <div class="section-subtitle">
+            A simple form you can adapt or replace with your own booking flow.
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <form class="contact-row" action="#" method="post">
+              <div class="field-group">
+                <label class="field-label" for="name">Name</label>
+                <input class="field-input" type="text" id="name" name="name" placeholder="What should I call you?" />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="email">Email</label>
+                <input class="field-input" type="email" id="email" name="email" placeholder="For replies &amp; confirmation" />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="subject">Subject</label>
+                <input class="field-input" type="text" id="subject" name="subject" placeholder="Booking request, question, etc." />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="session-type">Preferred session type</label>
+                <select class="field-select" id="session-type" name="session-type">
+                  <option value="">Select from your offerings</option>
+                  <option value="standard">Standard session</option>
+                  <option value="extended">Extended session</option>
+                  <option value="evening">Evening / long-form</option>
+                  <option value="other">Something else (explain below)</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="message">Message</label>
+                <textarea class="field-textarea" id="message" name="message" placeholder="Introduce yourself, mention when you’re hoping to meet, and anything else you want me to know."></textarea>
+              </div>
+
+              <div class="contact-footer-row">
+                <button class="btn btn-primary" type="submit">
+                  Send message
+                </button>
+                <div class="contact-note">
+                  This form is just a front-end template. Connect it to your email or booking system however you prefer.
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <aside class="contact-aside">
+            <h3>Direct contact details</h3>
+
+            <div class="contact-aside-item">
+              <span class="contact-aside-label">Email</span>
+              <span class="contact-aside-value">youremail@example.com</span>
+            </div>
+
+            <div class="contact-aside-item">
+              <span class="contact-aside-label">Preferred first contact</span>
+              <span class="contact-aside-value">
+                Email with basic screening info. No explicit or graphic messages.
+              </span>
+            </div>
+
+            <div class="contact-aside-item">
+              <span class="contact-aside-label">Response time</span>
+              <span class="contact-aside-value">
+                Within 24–48 hours for respectful, complete inquiries.
+              </span>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Your Name. All rights reserved.</div>
+      <div class="footer-links">
+        <span class="footer-link" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">About</span>
+        <span class="footer-link" onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })">Services</span>
+        <span class="footer-link" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">Contact</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.querySelector(".nav-toggle");
+    const navMenuMobile = document.getElementById("nav-menu-mobile");
+
+    if (navToggle && navMenuMobile) {
+      navToggle.addEventListener("click", () => {
+        const isOpen = navMenuMobile.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navMenuMobile.setAttribute("aria-hidden", String(!isOpen));
+      });
+
+      // Close mobile menu on link click
+      navMenuMobile.addEventListener("click", (e) => {
+        if (e.target.matches(".nav-link")) {
+          navMenuMobile.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navMenuMobile.setAttribute("aria-hidden", "true");
+        }
+      });
+    }
+
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // THEME SWITCH EXAMPLE (optional)
+    // To try another palette, uncomment one of the lines below:
+    // document.body.className = "theme-crimson";
+    // document.body.className = "theme-royal";
+  </script>
+</body>
+</html>

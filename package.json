@@ -1,0 +1,21 @@
+{
+  "name": "escort-site",
+  "version": "1.0.0",
+  "description": "Simple Express-based content manager and front-end for an escort site.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["express", "escort-site", "cms"],
+  "author": "Ashly Lorenzana",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
+  }
+}
